@@ -97,3 +97,6 @@ python train.py --train_batch 64 --workers 8 --cluster 200 --epoch 300 --lr_deca
 
 We follow the evaluation steps in previous works on video representation learning, e.g., [CoCLR](https://github.com/TengdaHan/CoCLR).
 
+## Visualization
+
+To visualize how much temporal cues are contained in each spatial area, we use CAM visualization approach in `./visualization`.  Specifically, we first load the pretrained backbone parameters and freeze them, and train a linear classifier head without bias to discriminate the original video clip and temporally reversed one, as shown in the function `train` in `./visualization/main_temporal.py`. After that, we could obtain the CAM visualization result by calling `returncam` function. The CAM results show how each spatial area in the video clip provides evidence to help discriminate whether in normal order or reverse.

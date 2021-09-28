@@ -105,9 +105,8 @@ def graph_contrast(feat, feat_full, adj):
     feat_full = F.normalize(feat_full, dim=-1)
     similarity = torch.mm(feat[:, 0], feat_full[:, 1].transpose(0, 1))
     similarity = torch.softmax(similarity/0.07, dim=1)
-    graph = similarity * adj[b//ngpus*replica_id: b//ngpus*(replica_id+1)]
-    loss = torch.sum(graph, dim=1)
-    loss = - torch.log(loss+1e-10)
+    loss = - torch.log(similarity+1e-10)
+    loss = loss * adj[b//ngpus*replica_id: b//ngpus*(replica_id+1)]
     return loss.mean()
 
 def motion_contrast(feat, feat_full, criterion):
